@@ -33,24 +33,17 @@ def open_browser(driver): #Открытие сайта указанным бра
     driver.set_window_size(*CONFIG.get('window_size'))
 
 
-def close_browser(driver): #Закрытие сайта указанным браузером
-    #Закрытие сайта
-    driver.close()
-
-
 def fill_in_the_fields(driver, locator, field_value):
-    # Получение ссылки на элемент (поле) ввода по его локатору
-    user_name = driver.find_element(*locator)
-    # Установка значения в поле
-    user_name.send_keys(field_value)
+    # Установка значения в поле полученное по локатору
+    driver.find_element(*locator).send_keys(field_value)
     # Задержка перед выполнением следующей команды
     time.sleep(2)
 
 
-def click_login_button(driver, locator): # Нажатие кнопки Login
-    # получение ссылки на кнопку авторизации Login
-    login_button = driver.find_element(*locator)
-    login_button.click() # Нажатие на кнопку
+def click_login_button(driver, locator):
+    # Нажатие на кнопку полученную по локатору
+    driver.find_element(*locator).click()
+    # Задержка перед выполнением следующей команды
     time.sleep(2)
 
 
@@ -75,7 +68,8 @@ def main(): #Основная программа
         driver,
         LOCATORS.get('login_page')['login_button']
     )
-    close_browser(driver) #Закрытие браузера
+
+    driver.close() # Закрытие сайта
 
 
 if __name__ == '__main__':
